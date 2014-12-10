@@ -26,7 +26,7 @@ Puppet::Reports.register_report(:sentry) do
         config = HieraPuppet.lookup('sentry', {}, self, nil, :priority)
 
         # Check the config contains what we need
-        if not config[:dsn]
+        if not config['dsn']
             raise(Puppet::ParseError, "Sentry did not contain a dsn")
         end
 
@@ -60,7 +60,7 @@ Puppet::Reports.register_report(:sentry) do
 
         # Configure raven
         Raven.configure do |config|
-            config.dsn = config[:dsn]
+            config.dsn = config['dsn']
         end
 
         tags = {
