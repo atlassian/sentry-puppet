@@ -72,14 +72,14 @@ Puppet::Reports.register_report(:sentry) do
             'transaction_uuid' => @transaction_uuid,
         }
 
-        self.resource_statuses.each do |status|
+        self.resource_statuses.each do |_, status|
             status.events.each do |event|
                 if event.status != "failure"
                     return
                 end
 
                 Raven.captureMessage(event.message, {
-                  :culprit => status.resource.title,
+                  :culprit => status.resource,
                   :server_name => @host,
                   :tags => tags.merge({
                     'resource' => status.title,
@@ -97,27 +97,5 @@ Puppet::Reports.register_report(:sentry) do
                 })
             end
         end
-
-        # Get the important looking stuff to sentry
-        # self.logs.each do |log|
-        #     if log.level.to_s == 'err'
-        #         Raven.captureMessage(log.message, {
-        #           :server_name => @host,
-        #           :tags => {
-        #             'status'      => @status,
-        #             'environment' => @environment,
-        #             'version'     => @puppet_version,
-        #             'kind'        => @kind,
-        #             'configuration_version' => @configuration_version
-        #             'transaction_uuid' => @transaction_uuid,
-        #           },
-        #           :extra => {
-        #             'source' => log.source,
-        #             'line'   => log.line,
-        #             'file'   => log.file,
-        #           },
-        #         })
-        #     end
-        # end
     end
 end
