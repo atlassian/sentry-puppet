@@ -68,7 +68,7 @@ Puppet::Reports.register_report(:sentry) do
             'environment' => @environment,
             'version'     => @puppet_version,
             'kind'        => @kind,
-            'configuration_version' => @configuration_version
+            'configuration_version' => @configuration_version,
             'transaction_uuid' => @transaction_uuid,
         }
 
@@ -83,7 +83,7 @@ Puppet::Reports.register_report(:sentry) do
                   :server_name => @host,
                   :tags => tags.merge({
                     'resource' => status.title,
-                    'resource_type' => status.resource_type
+                    'resource_type' => status.resource_type,
                   }),
                   :extra => {
                     'name'   => event.name,
