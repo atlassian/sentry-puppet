@@ -61,6 +61,8 @@ Puppet::Reports.register_report(:sentry) do
         # Configure raven
         Raven.configure do |c|
             c.dsn = config['dsn']
+            c.encoding = 'gzip'
+            c.timeout = 5
         end
 
         tags = {
