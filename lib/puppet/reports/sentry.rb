@@ -30,20 +30,25 @@ Puppet::Reports.register_report(:sentry) do
             raise(Puppet::ParseError, "Sentry did not contain a dsn")
         end
 
-         if self.respond_to?(:host)
-             @host = self.host
-         end
+        if self.respond_to?(:host)
+            @host = self.host
+        end
 
-         if self.respond_to?(:kind)
-             @kind = self.kind
-         end
-         if self.respond_to?(:puppet_version)
-           @puppet_version = self.puppet_version
-         end
+        if self.respond_to?(:kind)
+            @kind = self.kind
+        end
 
-         if self.respond_to?(:status)
-           @status = self.status
-         end
+        if self.respond_to?(:puppet_version)
+            @puppet_version = self.puppet_version
+        end
+
+        if self.respond_to?(:configuration_version)
+            @configuration_version = self.configuration_version
+        end
+
+        if self.respond_to?(:status)
+            @status = self.status
+        end
 
         # Configure raven
         Raven.configure do |config|
@@ -59,6 +64,7 @@ Puppet::Reports.register_report(:sentry) do
                     'status'      => @status,
                     'version'     => @puppet_version,
                     'kind'        => @kind,
+                    'configuration_version' => @configuration_version
                   },
                   :extra => {
                     'source' => log.source,
