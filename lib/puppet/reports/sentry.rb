@@ -46,6 +46,10 @@ Puppet::Reports.register_report(:sentry) do
             @configuration_version = self.configuration_version
         end
 
+        if self.respond_to?(:transaction_uuid)
+            @transaction_uuid = self.transaction_uuid
+        end
+
         if self.respond_to?(:status)
             @status = self.status
         end
@@ -65,6 +69,7 @@ Puppet::Reports.register_report(:sentry) do
                     'version'     => @puppet_version,
                     'kind'        => @kind,
                     'configuration_version' => @configuration_version
+                    'transaction_uuid' => @transaction_uuid,
                   },
                   :extra => {
                     'source' => log.source,
