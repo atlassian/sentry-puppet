@@ -59,8 +59,8 @@ Puppet::Reports.register_report(:sentry) do
         end
 
         # Configure raven
-        Raven.configure do |config|
-            config.dsn = config['dsn']
+        Raven.configure do |c|
+            c.dsn = config['dsn']
         end
 
         tags = {
