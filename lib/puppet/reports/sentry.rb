@@ -54,6 +54,10 @@ Puppet::Reports.register_report(:sentry) do
             @status = self.status
         end
 
+        if self.respond_to?(:environment)
+            @environment = self.environment
+        end
+
         # Configure raven
         Raven.configure do |config|
             config.dsn = config[:dsn]
@@ -66,6 +70,7 @@ Puppet::Reports.register_report(:sentry) do
                   :server_name => @host,
                   :tags => {
                     'status'      => @status,
+                    'environment' => @environment,
                     'version'     => @puppet_version,
                     'kind'        => @kind,
                     'configuration_version' => @configuration_version
