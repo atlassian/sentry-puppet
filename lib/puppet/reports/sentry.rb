@@ -84,7 +84,7 @@ Puppet::Reports.register_report(:sentry) do
                   :culprit => status.resource,
                   :server_name => @host,
                   :tags => tags.merge({
-                    'resource' => status.title,
+                    'resource' => status.resource,
                     'resource_type' => status.resource_type,
                   }),
                   :extra => {
