@@ -1,4 +1,4 @@
-require 'hiera_puppet'
+require 'hiera'
 require 'puppet'
 
 begin
