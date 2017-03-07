@@ -28,6 +28,10 @@ Puppet::Reports.register_report(:sentry) do
         raise(Puppet::ParseError, "Sentry report config file #{configfile} not readable") unless File.exist?(configfile)
         config = YAML.load_file(configfile)
 
+        if not config['dsn']
+            raise(Puppet::ParseError, "Sentry did not contain a dsn")
+        end
+
         if self.respond_to?(:host)
             @host = self.host
         end
