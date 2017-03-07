@@ -1,5 +1,6 @@
 require 'hiera'
 require 'puppet'
+require 'yaml'
 
 begin
     require 'rubygems'
@@ -23,9 +24,10 @@ Puppet::Reports.register_report(:sentry) do
             return
         end
 
-        config = HieraPuppet.lookup('sentry', {}, self, nil, :priority)
+        configfile = "/etc/puppetlabs/puppet/sentry.yaml"
+        raise(Puppet::ParseError, "Sentry report config file #{configfile} not readable") unless File.exist?(configfile)
+        config = YAML.load_file(configfile)
 
-        # Check the config contains what we need
         if not config['dsn']
             raise(Puppet::ParseError, "Sentry did not contain a dsn")
         end
