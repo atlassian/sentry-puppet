@@ -7,4 +7,4 @@
      group   => $::sentry::group,
      content => template('sentry/sentry.yaml.erb')
    }
-
+}
